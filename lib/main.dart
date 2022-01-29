@@ -53,6 +53,8 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            //TODO: Learn how to update state in InheritedWidget
+            //TODO: and trigger other widgets that use it to rebuild.
             Text('count = ${state.count}'),
             Text('name = ${state.name}'),
           ],
