@@ -15,8 +15,11 @@ class InheritedState extends InheritedWidget {
     Key? key,
   }) : super(key: key, child: child);
 
-  static InheritedState? of(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<InheritedState>();
+  // This is a convenience method to make it easier
+  // for descendant widgets to get an instance.
+  static InheritedState of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<InheritedState>()
+          as InheritedState;
 
   @override
   bool updateShouldNotify(InheritedState oldWidget) {
@@ -30,10 +33,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'InheritedWidget Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      // This wraprs HomePage in InheritedState so
+      // any descendant widgets can get the state.
       home: InheritedState(child: HomePage()),
     );
   }
@@ -44,22 +49,29 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = InheritedState.of(context)!.state;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Inherited Widget Demo'),
+        title: Text('InheritedWidget Demo'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            //TODO: Learn how to update state in InheritedWidget
-            //TODO: and trigger other widgets that use it to rebuild.
-            Text('count = ${state.count}'),
-            Text('name = ${state.name}'),
-          ],
-        ),
+        child: ChildWidget(),
       ),
+    );
+  }
+}
+
+class ChildWidget extends StatelessWidget {
+  const ChildWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final state = InheritedState.of(context).state;
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text('count = ${state.count}'),
+        Text('name = ${state.name}'),
+      ],
     );
   }
 }
