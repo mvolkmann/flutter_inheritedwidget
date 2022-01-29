@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      // This wraprs HomePage in InheritedState so
+      // This wraps HomePage in InheritedState so
       // any descendant widgets can get the state.
       home: InheritedState(child: HomePage()),
     );
